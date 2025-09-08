@@ -1,0 +1,59 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id           String @id @default(uuid())
+  email        String @unique
+  username     String @unique
+  password     String
+  role         Role   @default(USER)
+  title        String
+  bio          String
+  imageUrl     String
+  githubLink   String
+  linkedInLink String
+
+  // Relation fields
+  createdExperiences Experience[] @relation("createdExperiences")
+  deletedExperiences Experience[] @relation("deletedExperiences")
+}
+
+// TODO: PROJECT MODEL
+// model Project {
+//
+// }
+
+model Experience {
+  id          String    @id @default(uuid())
+  title       String
+  description String
+  companyName String
+  location    String
+  imageUrls   String[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+  creatorId   String
+  creator     User      @relation(name: "createdExperiences", fields: [creatorId], references: [id])
+  deleterId   String?
+  deleter     User?     @relation(name: "deletedExperiences", fields: [deleterId], references: [id])
+  startDate   DateTime  @db.Timestamptz()
+  endDate     DateTime? @db.Timestamptz() // Optional incase the experience is still ongoing
+}
