@@ -1,5 +1,5 @@
 // Urls for the backend
-const BASE_URL = "http://localhost:4007";
+const BASE_URL = "http://localhost:4001";
 
 /* PROJECTS */
 const PROJECTS = BASE_URL + "/projects/";
