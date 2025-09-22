@@ -22,10 +22,16 @@ export default class ExperiencesController {
     next: NextFunction
   ) {
     try {
-      const { title, description, companyName, location, startDate, endDate } =
-        req.body;
+      const {
+        title,
+        description,
+        companyName,
+        location,
+        startDate,
+        endDate,
+        images,
+      } = req.body;
       const submitter = await getCurrentUser(response);
-      const files = req.files as Express.Multer.File[];
 
       const createdExperience = await ExperiencesService.createExperience(
         title,
@@ -33,7 +39,7 @@ export default class ExperiencesController {
         companyName,
         location,
         submitter,
-        files.map((file) => file.path),
+        images,
         startDate,
         endDate
       );

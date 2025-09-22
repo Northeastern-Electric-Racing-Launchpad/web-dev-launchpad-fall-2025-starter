@@ -25,7 +25,7 @@ export default class ExperiencesService {
     companyName: string,
     location: string,
     submitter: User,
-    filePaths: string[],
+    imageUrls: string[],
     startDate: Date,
     endDate?: Date
   ): Promise<Experience> {
@@ -38,7 +38,7 @@ export default class ExperiencesService {
         startDate,
         endDate: endDate ? endDate : null,
         creatorId: submitter.id,
-        imageUrls: filePaths,
+        imageUrls,
       },
       ...experienceQueryArgs,
     });
@@ -53,7 +53,7 @@ export default class ExperiencesService {
     companyName: string,
     location: string,
     submitter: User,
-    filePaths: string[],
+    imageUrls: string[],
     startDate: Date,
     endDate?: Date
   ): Promise<Experience> {
@@ -80,7 +80,7 @@ export default class ExperiencesService {
         location,
         startDate,
         endDate: endDate ? endDate : null,
-        imageUrls: filePaths,
+        imageUrls,
       },
       ...experienceQueryArgs,
     });

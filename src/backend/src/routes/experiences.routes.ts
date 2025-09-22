@@ -6,14 +6,14 @@ import {
   validateInputs,
 } from "../utils/validation.utils";
 import { body } from "express-validator";
-import { upload } from "../utils/file.utils";
 
 const experiencesRouter = express.Router();
 
 experiencesRouter.get("/", ExperiencesController.getAllExperiences);
 experiencesRouter.post(
   "/new",
-  upload.array("images"),
+  body("images").isArray(),
+  nonEmptyString(body("images.*")),
   nonEmptyString(body("title")),
   nonEmptyString(body("description")),
   nonEmptyString(body("companyName")),
@@ -25,8 +25,8 @@ experiencesRouter.post(
 );
 experiencesRouter.post(
   "/:id",
-  upload.array("images"),
-  nonEmptyString(body("title")),
+  body("images").isArray(),
+  nonEmptyString(body("images.*")),
   nonEmptyString(body("description")),
   nonEmptyString(body("companyName")),
   nonEmptyString(body("location")),
